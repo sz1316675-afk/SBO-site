@@ -134,16 +134,9 @@ sel.addEventListener('change',()=>{
     return b;
   }
 
-  const edit=button('✏️ Редактировать',()=>{
-    editing=!editing;
-    document.body.contentEditable=editing?'true':'false';
-    bar.contentEditable='false';
-    edit.textContent=editing?'Завершить':'✏️ Редактировать';
-  });
 
-  const save=button('⬇ Скачать сайт',()=>{
-    document.body.contentEditable='false';
-    bar.remove();
+
+ 
 
     const html='<!doctype html>\n'+document.documentElement.outerHTML;
     const blob=new Blob([html],{type:'text/html;charset=utf-8'});
