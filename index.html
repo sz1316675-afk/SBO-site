@@ -86,4 +86,79 @@ sel.addEventListener('change',()=>{const x=data[sel.value]; if(!x){a.classList.a
   bar.append(edit, save);
   document.body.appendChild(bar);
 })();
-</script></script></body></html>
+</script>
+<script>
+const data = {
+  rub:{apply:'https://forms.yandex.ru/admin/6aef89a31f1eb59ccd369c08/edit',discord:'https://discord.gg/EEFxWR42b'},
+  arb:{apply:'https://forms.yandex.ru/admin/6aef8998b9e5cad8eacc3171/edit',discord:'https://discord.gg/E7NJWGsxP'},
+  pat:{apply:'https://forms.yandex.ru/admin/6aef897997a377d1b8c60d86/edit',discord:'https://discord.gg/K5v7G46XT'},
+  tver:{apply:'https://forms.yandex.ru/admin/6aee39c34a052dbe270da5b3/edit',discord:'https://discord.gg/TqQxPaYrJ'},
+  kut:{apply:'https://forms.yandex.ru/admin/6aef85c897a377d1b8c60c61/edit',discord:'https://discord.gg/szsHneW98'},
+  six:{apply:'https://forms.yandex.ru/admin/6aef8b55aeb352d8aa52984f/edit',discord:'https://discord.gg/uPeJaYh2C'}
+};
+
+const sel=document.querySelector('#division');
+const a=document.querySelector('#applyBtn');
+const d=document.querySelector('#discordBtn');
+
+sel.addEventListener('change',()=>{
+  const x=data[sel.value];
+  if(!x){
+    a.classList.add('disabled');
+    d.classList.add('disabled');
+    a.removeAttribute('href');
+    d.removeAttribute('href');
+    return;
+  }
+  a.href=x.apply;
+  a.target='_blank';
+  d.href=x.discord;
+  d.target='_blank';
+  a.classList.remove('disabled');
+  d.classList.remove('disabled');
+});
+</script>
+
+<script>
+(() => {
+  const bar=document.createElement('div');
+  bar.style.cssText='position:fixed;bottom:15px;right:15px;z-index:99999;display:flex;gap:8px;padding:12px;background:#101820;border:1px solid #d8aa48;border-radius:10px';
+
+  let editing=false;
+
+  function button(label,action){
+    const b=document.createElement('button');
+    b.textContent=label;
+    b.style.cssText='padding:11px;background:#d8aa48;color:#111;border:0;border-radius:6px;font-weight:bold;cursor:pointer';
+    b.onclick=action;
+    return b;
+  }
+
+  const edit=button('✏️ Редактировать',()=>{
+    editing=!editing;
+    document.body.contentEditable=editing?'true':'false';
+    bar.contentEditable='false';
+    edit.textContent=editing?'Завершить':'✏️ Редактировать';
+  });
+
+  const save=button('⬇ Скачать сайт',()=>{
+    document.body.contentEditable='false';
+    bar.remove();
+
+    const html='<!doctype html>\n'+document.documentElement.outerHTML;
+    const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('a');
+    link.href=url;
+    link.download='index.html';
+    link.click();
+
+    setTimeout(()=>URL.revokeObjectURL(url),2000);
+  });
+
+  bar.append(edit,save);
+  document.body.appendChild(bar);
+})();
+</script>
+</body>
+</html>
